@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>IZE TV</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: #111; overflow: hidden; }
+  iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
+  iframe.active { opacity: 1; pointer-events: auto; }
+  #bar { position: fixed; bottom: 0; left: 0; height: 3px; background: #e07b39; z-index: 99; transition: width linear; }
+</style>
+</head>
+<body>
+<iframe id="f0" src="https://izedashboardomissao.streamlit.app/" class="active"></iframe>
+<iframe id="f1" src="https://dashboardcomercialize.streamlit.app/" ></iframe>
+<iframe id="f2" src="https://izedashboardcronograma.streamlit.app/" ></iframe>
+<div id="bar"></div>
+<script>
+var urls = ["https://izedashboardomissao.streamlit.app/","https://dashboardcomercialize.streamlit.app/","https://izedashboardcronograma.streamlit.app/"];
+var secs = [15,15,15];
+var cur = 0;
+var bar = document.getElementById('bar');
+var start;
+var raf;
+
+function showFrame(i) {
+  document.querySelectorAll('iframe').forEach(function(f){ f.classList.remove('active'); });
+  document.getElementById('f'+i).classList.add('active');
+}
+
+function animateBar(duration, callback) {
+  cancelAnimationFrame(raf);
+  start = null;
+  bar.style.transition = 'none';
+  bar.style.width = '0%';
+  setTimeout(function(){
+    bar.style.transition = 'width ' + duration + 'ms linear';
+    bar.style.width = '100%';
+  }, 30);
+  var end = Date.now() + duration;
+  function tick() {
+    if (Date.now() >= end) { callback(); return; }
+    raf = requestAnimationFrame(tick);
+  }
+  raf = requestAnimationFrame(tick);
+}
+
+function next() {
+  cur = (cur + 1) % urls.length;
+  showFrame(cur);
+  animateBar(secs[cur] * 1000, next);
+}
+
+showFrame(0);
+animateBar(secs[0] * 1000, next);
+</script>
+</body>
+</html>
