@@ -3,57 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>IZE TV</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; background: #111; overflow: hidden; }
-  iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
-  iframe.active { opacity: 1; pointer-events: auto; }
-  #bar { position: fixed; bottom: 0; left: 0; height: 3px; background: #e07b39; z-index: 99; transition: width linear; }
-</style>
-</head>
-<body>
-<iframe id="f0" src="https://izedashboardomissao.streamlit.app/" class="active"></iframe>
-<iframe id="f1" src="https://dashboardcomercialize.streamlit.app/" ></iframe>
-<iframe id="f2" src="https://izedashboardcronograma.streamlit.app/" ></iframe>
-<div id="bar"></div>
 <script>
-var urls = ["https://izedashboardomissao.streamlit.app/","https://dashboardcomercialize.streamlit.app/","https://izedashboardcronograma.streamlit.app/"];
-var secs = [40,40,40];
-var cur = 0;
-var bar = document.getElementById('bar');
-var start;
-var raf;
+var dashs = [
+  { url: "https://izedashboardomissao.streamlit.app/?embed=true", seg: 40 },
+  { url: "https://dashboardcomercialize.streamlit.app/?embed=true", seg: 40 },
+  { url: "https://izedashboardcronograma.streamlit.app/?embed=true", seg: 40 }
+];
 
-function showFrame(i) {
-  document.querySelectorAll('iframe').forEach(function(f){ f.classList.remove('active'); });
-  document.getElementById('f'+i).classList.add('active');
-}
+var params = new URLSearchParams(window.location.search);
+var cur = parseInt(params.get("i") || "0");
 
-function animateBar(duration, callback) {
-  cancelAnimationFrame(raf);
-  start = null;
-  bar.style.transition = 'none';
-  bar.style.width = '0%';
-  setTimeout(function(){
-    bar.style.transition = 'width ' + duration + 'ms linear';
-    bar.style.width = '100%';
-  }, 30);
-  var end = Date.now() + duration;
-  function tick() {
-    if (Date.now() >= end) { callback(); return; }
-    raf = requestAnimationFrame(tick);
-  }
-  raf = requestAnimationFrame(tick);
-}
+var proximo = (cur + 1) % dashs.length;
+var proximoSeg = dashs[proximo].seg;
 
-function next() {
-  cur = (cur + 1) % urls.length;
-  showFrame(cur);
-  animateBar(secs[cur] * 1000, next);
-}
+setTimeout(function() {
+  window.location.href = "index.html?i=" + proximo;
+}, dashs[cur].seg * 1000);
 
-showFrame(0);
-animateBar(secs[0] * 1000, next);
+window.location.href = dashs[cur].url;
 </script>
-</body>
+</head>
 </html>
