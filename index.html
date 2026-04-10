@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>IZE TV</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
-  iframe { width: 100%; height: 100%; border: none; display: none; }
-  iframe.active { display: block; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IZE TV</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+    iframe { width: 100%; height: 100%; border: none; display: none; }
+    iframe.active { display: block; }
+  </style>
 </head>
 <body>
 
-<iframe id="f0" src="https://izedashboardomissao.streamlit.app/?embed=true"></iframe>
-<iframe id="f1" src="https://dashboardcomercialize.streamlit.app/?embed=true"></iframe>
-<iframe id="f2" src="https://izedashboardcronograma.streamlit.app/?embed=true"></iframe>
+<iframe id="f0" src="https://izedashboardomissao.streamlit.app/?embed=true&embed_options=hide_toolbar,hide_footer,hide_padding"></iframe>
+<iframe id="f1" src="https://dashboardcomercialize.streamlit.app/?embed=true&embed_options=hide_toolbar,hide_footer,hide_padding"></iframe>
+<iframe id="f2" src="https://izedashboardcronograma.streamlit.app/?embed=true&embed_options=hide_toolbar,hide_footer,hide_padding"></iframe>
 
 <script>
 var cur = 0;
