@@ -56,8 +56,8 @@
 <script>
   // Calcula o scale para que 1280x720 caiba exatamente na tela
   function ajustarScale() {
-    var scaleX = window.innerWidth / 1280;
-    var scaleY = window.innerHeight / 720;
+    var scaleX = window.innerWidth / 1344;
+    var scaleY = window.innerHeight / 756;
     var scale = Math.min(scaleX, scaleY);
     document.querySelectorAll('.iframe-wrapper iframe').forEach(function(f) {
       f.style.transform = 'scale(' + scale + ')';
