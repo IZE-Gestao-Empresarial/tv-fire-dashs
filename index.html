@@ -22,18 +22,32 @@
       display: none;
     }
     iframe.active { display: block; }
+
+    /* Cobre o rodapé "Built with Streamlit" e o botão "Fullscreen" */
+    #footer-cover {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 50px;
+      background: #000;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
 
-<iframe id="f0" src="https://izedashboardomissao.streamlit.app/?embed=true&embed_options=hide_toolbar,hide_footer,hide_padding,light_theme"></iframe>
-<iframe id="f1" src="https://dashboardcomercialize.streamlit.app/?embed=true&embed_options=hide_toolbar,hide_footer,hide_padding,light_theme"></iframe>
-<iframe id="f2" src="https://izedashboardcronograma.streamlit.app/?embed=true&embed_options=hide_toolbar,hide_footer,hide_padding,light_theme"></iframe>
+<iframe id="f0" src="https://izedashboardomissao.streamlit.app/?embed=true"></iframe>
+<iframe id="f1" src="https://dashboardcomercialize.streamlit.app/?embed=true"></iframe>
+<iframe id="f2" src="https://izedashboardcronograma.streamlit.app/?embed=true"></iframe>
+
+<!-- Div preto que cobre o rodapé do Streamlit -->
+<div id="footer-cover"></div>
 
 <script>
 var cur = 0;
 var total = 3;
-var seg = 120;
+var seg = 40;
 
 function trocar() {
   document.getElementById("f" + cur).classList.remove("active");
