@@ -21,18 +21,10 @@
     .iframe-wrapper iframe {
       position: absolute;
       top: 0; left: 0;
-      width: 100%;
-      height: calc(100% + 45px); /* altura extra para o rodapé do streamlit ficar fora da tela */
+      width: 960px;
+      height: 1144px;
       border: none;
-    }
-
-    #footer-cover {
-      position: fixed;
-      bottom: 0; left: 0;
-      width: 100vw;
-      height: 45px;
-      background: #000;
-      z-index: 9999;
+      transform-origin: top left;
     }
   </style>
 </head>
@@ -48,9 +40,18 @@
   <iframe src="https://izedashboardcronograma.streamlit.app/~/+/?embed=true"></iframe>
 </div>
 
-<div id="footer-cover"></div>
-
 <script>
+  function ajustarScale() {
+    var scaleX = window.innerWidth / 960;
+    var scaleY = window.innerHeight / 1144;
+    var scale = Math.min(scaleX, scaleY);
+    document.querySelectorAll('.iframe-wrapper iframe').forEach(function(f) {
+      f.style.transform = 'scale(' + scale + ')';
+    });
+  }
+  ajustarScale();
+  window.addEventListener('resize', ajustarScale);
+
   var cur = 0;
   var total = 3;
   var seg = 40;
@@ -62,6 +63,10 @@
     setTimeout(trocar, seg * 1000);
   }
   setTimeout(trocar, seg * 1000);
+</script>
+
+</body>
+</html>
 </script>
 
 </body>
