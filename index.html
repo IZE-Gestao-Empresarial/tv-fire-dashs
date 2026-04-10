@@ -21,19 +21,17 @@
     .iframe-wrapper iframe {
       position: absolute;
       top: 0; left: 0;
-      /* Renderiza como 1280x720 e escala pra caber na tela */
-      width: 1344px;
-      height: 756px;
+      width: 960px;
+      height: 540px;
       border: none;
       transform-origin: top left;
-      transform: scale(var(--scale, 1));
     }
 
     #footer-cover {
       position: fixed;
       bottom: 0; left: 0;
       width: 100vw;
-      height: 50px;
+      height: 45px;
       background: #000;
       z-index: 9999;
     }
@@ -54,10 +52,9 @@
 <div id="footer-cover"></div>
 
 <script>
-  // Calcula o scale para que 1280x720 caiba exatamente na tela
   function ajustarScale() {
-    var scaleX = window.innerWidth / 1344;
-    var scaleY = window.innerHeight / 756;
+    var scaleX = window.innerWidth / 960;
+    var scaleY = window.innerHeight / 540;
     var scale = Math.min(scaleX, scaleY);
     document.querySelectorAll('.iframe-wrapper iframe').forEach(function(f) {
       f.style.transform = 'scale(' + scale + ')';
@@ -77,10 +74,6 @@
     setTimeout(trocar, seg * 1000);
   }
   setTimeout(trocar, seg * 1000);
-</script>
-
-</body>
-</html>
 </script>
 
 </body>
