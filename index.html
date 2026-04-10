@@ -5,20 +5,17 @@
 <title>IZE TV</title>
 <script>
 var dashs = [
-  { url: "https://izedashboardomissao.streamlit.app/", seg: 40 },
-  { url: "https://dashboardcomercialize.streamlit.app/", seg: 40 },
-  { url: "https://izedashboardcronograma.streamlit.app/", seg: 40 }
+  { url: "https://izedashboardomissao.streamlit.app/?embed=true", seg: 40 },
+  { url: "https://dashboardcomercialize.streamlit.app/?embed=true", seg: 40 },
+  { url: "https://izedashboardcronograma.streamlit.app/?embed=true", seg: 40 }
 ];
-
 var params = new URLSearchParams(window.location.search);
 var cur = parseInt(params.get("i") || "0");
 var proximo = (cur + 1) % dashs.length;
-
 var meta = document.createElement("meta");
 meta.httpEquiv = "refresh";
 meta.content = dashs[cur].seg + ";url=index.html?i=" + proximo;
 document.head.appendChild(meta);
-
 window.location.replace(dashs[cur].url);
 </script>
 </head>
