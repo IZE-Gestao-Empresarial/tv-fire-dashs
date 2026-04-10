@@ -21,10 +21,9 @@
     .iframe-wrapper iframe {
       position: absolute;
       top: 0; left: 0;
-      width: 960px;
-      height: 540px;
+      width: 100%;
+      height: calc(100% + 45px); /* altura extra para o rodapé do streamlit ficar fora da tela */
       border: none;
-      transform-origin: top left;
     }
 
     #footer-cover {
@@ -52,17 +51,6 @@
 <div id="footer-cover"></div>
 
 <script>
-  function ajustarScale() {
-    var scaleX = window.innerWidth / 960;
-    var scaleY = window.innerHeight / 540;
-    var scale = Math.min(scaleX, scaleY);
-    document.querySelectorAll('.iframe-wrapper iframe').forEach(function(f) {
-      f.style.transform = 'scale(' + scale + ')';
-    });
-  }
-  ajustarScale();
-  window.addEventListener('resize', ajustarScale);
-
   var cur = 0;
   var total = 3;
   var seg = 40;
