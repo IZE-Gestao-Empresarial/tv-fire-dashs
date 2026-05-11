@@ -4,28 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>IZE TV</title>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
       width: 100vw;
       height: 100vh;
       overflow: hidden;
       background: #000;
     }
+
     .iframe-wrapper {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       opacity: 0;
       pointer-events: none;
       transition: opacity 1.2s ease-in-out;
       overflow: hidden;
+      background: #000;
     }
+
     .iframe-wrapper.active {
       opacity: 1;
       pointer-events: auto;
     }
+
     .iframe-wrapper iframe {
       position: absolute;
       top: 0;
@@ -37,52 +49,73 @@
     }
   </style>
 </head>
+
 <body>
-<div class="iframe-wrapper active" id="w0">
-  <iframe src="https://izedashboardomissao.streamlit.app/~/+/?embed=true"></iframe>
-</div>
-<div class="iframe-wrapper" id="w1">
-  <iframe src="https://dashboardcomercialize.streamlit.app/~/+/?embed=true"></iframe>
-</div>
-<div class="iframe-wrapper" id="w2">
-  <iframe src="https://izedashboardcronograma.streamlit.app/~/+/?embed=true"></iframe>
-</div>
-<script>
-  // Base fixa 960x540 (proporção 16:9 para TV)
-  var DASH_W = 960;
-  var DASH_H = 540;
-  function ajustarScale() {
-    var vw = window.innerWidth;
-    var vh = window.innerHeight;
-    // cover: escala que preenche a tela inteira sem barras pretas
-    var scale = Math.max(vw / DASH_W, vh / DASH_H);
-    // Centraliza após o scale
-    var scaledW = DASH_W * scale;
-    var scaledH = DASH_H * scale;
-    var offsetX = (vw - scaledW) / 2;
-    var offsetY = (vh - scaledH) / 2;
-    document.querySelectorAll('.iframe-wrapper iframe').forEach(function(f) {
-      f.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
-    });
-  }
-  ajustarScale();
-  window.addEventListener('resize', ajustarScale);
-  var cur        = 0;
-  var total      = 3;
-  var DURACAO_MS = 90000; // 90 segundos por dashboard
-  var FADE_MS    = 3000;  // duração do fade (igual ao transition no CSS)
-  function trocar() {
-    var anterior = cur;
-    cur = (cur + 1) % total;
-    // Fade in do próximo
-    document.getElementById('w' + cur).classList.add('active');
-    // Fade out do anterior após o fade completar
-    setTimeout(function() {
-      document.getElementById('w' + anterior).classList.remove('active');
-    }, FADE_MS);
+  <div class="iframe-wrapper active" id="w0">
+    <iframe src="https://izedashboardomissao.streamlit.app/~/+/?embed=true"></iframe>
+  </div>
+
+  <div class="iframe-wrapper" id="w1">
+    <iframe src="https://dashboardcomercialize.streamlit.app/~/+/?embed=true"></iframe>
+  </div>
+
+  <div class="iframe-wrapper" id="w2">
+    <iframe src="https://izedashboardcronograma.streamlit.app/~/+/?embed=true"></iframe>
+  </div>
+
+  <script>
+    // Base fixa 960x540, proporção 16:9 para TV
+    var DASH_W = 960;
+    var DASH_H = 540;
+
+    function ajustarScale() {
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
+
+      // Cover: escala para preencher a tela inteira sem barras pretas
+      var scale = Math.max(vw / DASH_W, vh / DASH_H);
+
+      // Centraliza após aplicar o scale
+      var scaledW = DASH_W * scale;
+      var scaledH = DASH_H * scale;
+
+      var offsetX = (vw - scaledW) / 2;
+      var offsetY = (vh - scaledH) / 2;
+
+      document.querySelectorAll('.iframe-wrapper iframe').forEach(function(f) {
+        f.style.transform =
+          'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
+      });
+    }
+
+    ajustarScale();
+    window.addEventListener('resize', ajustarScale);
+
+    var cur = 0;
+    var total = 3;
+
+    // 1 minuto por dashboard
+    var DURACAO_MS = 60000;
+
+    // Tempo para remover o dashboard anterior após o fade
+    var FADE_MS = 3000;
+
+    function trocar() {
+      var anterior = cur;
+      cur = (cur + 1) % total;
+
+      // Faz fade in do próximo dashboard
+      document.getElementById('w' + cur).classList.add('active');
+
+      // Remove o anterior depois do fade
+      setTimeout(function() {
+        document.getElementById('w' + anterior).classList.remove('active');
+      }, FADE_MS);
+
+      setTimeout(trocar, DURACAO_MS);
+    }
+
     setTimeout(trocar, DURACAO_MS);
-  }
-  setTimeout(trocar, DURACAO_MS);
-</script>
+  </script>
 </body>
 </html>
